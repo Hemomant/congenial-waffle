@@ -3,14 +3,14 @@
 #import bibliotek
 import arcpy
 from math import sqrt, pi
-#nadpisywanie warstwy wyjœciowej
+#nadpisywanie warstwy wyjÅ›ciowej
 arcpy.env.overwriteOutput = True
 
-#***G³ówna funcja programu***
+#***GÅ‚Ã³wna funcja programu***
 def Budynki():
     try:
-        print('Program wczyta³ biblioteki, teraz wczytuje i przetwarza warstwe')
-        #wczytanie warstwy wyjœciowej
+        print('Program wczytaÅ‚ biblioteki, teraz wczytuje i przetwarza warstwe')
+        #wczytanie warstwy wyjÅ›ciowej
         #layer = arcpy.GetParameterAsText(0)
         layer = arcpy.MakeFeatureLayer_management(r".\Dane.shp", "dane")
         #funkcja klucz
@@ -56,7 +56,7 @@ def simplify(layer):
 
 
 
-            #Petla z g³ównym warunkiem uproszczenia - szukanie siecznej spelniajacej warunki
+            #Petla z gÅ‚Ã³wnym warunkiem uproszczenia - szukanie siecznej spelniajacej warunki
             while (len(punkty) > 4 and len(punkty)-2*k > 1):
                 print ('Iteracja : {}'.format(idskolejne+1))
                 #tworzenie zmiennych do pojedynczego budynku
@@ -97,14 +97,14 @@ def simplify(layer):
                 sciany.append([bud180[0][0],bud180[0][1]])
                 sciany = arcpy.Polygon(arcpy.Array([arcpy.Point(*coords) for coords in sciany]))
 
-                #G³ówny warunek dla uproszczonych 180
+                #GÅ‚Ã³wny warunek dla uproszczonych 180
                 if (len(bud180) > 4 and len(bud180)-2*k > 1):
                     #zatrzymajka dla petli while
                     stop = 0
 
                     #Uproszczenie siecznymi
                     for p0 in range(0, len(bud180)-k-1):
-                        #Zasiêgi tworzenia siecznych
+                        #ZasiÄ™gi tworzenia siecznych
                         if p0 < k:
                             zasieg = len(bud180)-k+p0
                         else:
@@ -142,8 +142,9 @@ def simplify(layer):
                         wyciete.append([bud180[nowe][0],bud180[nowe][1]])             
                     else:
                         uproszczone.append([bud180[nowe][0],bud180[nowe][1]])
-
-                if sciany.contains(siecznatest):
+                        
+                #sprawdzenie czy na zewnatrz
+                if siecznatest.within(sciany):
                     InOut.append(0)
                 else:
                     InOut.append(1)
@@ -215,7 +216,7 @@ def simplify(layer):
         arcpy.AddError(err.message)
     finally: pass
 
-#***Funkcja odczytuj¹ca geometrie pojedynczych punktow***
+#***Funkcja odczytujÄ…ca geometrie pojedynczych punktow***
 def read2(geometria):
     try:
         listatmp=[]
