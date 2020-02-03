@@ -1,8 +1,9 @@
 # -*- coding: cp1250 -*-
-
+print('Skrypt napisal: Dawid Sarna')
+print('Wczytywanie bibliotek')
 #import bibliotek
 import arcpy
-from math import sqrt, pi
+from math import sqrt, pi, cos
 #nadpisywanie warstwy wyjściowej
 arcpy.env.overwriteOutput = True
 
@@ -30,7 +31,8 @@ def simplify(layer):
         kursor_czytania = arcpy.da.SearchCursor(layer, ["SHAPE@"])
         idbudynku = arcpy.da.SearchCursor(layer, ['OBJECTID'])
         #tolerancja uproszczenia dla 180
-        tolerancja = input('podaj tolerancje katowa (zalecane blisko 0, gdyz wartosci sa z Acos): ')
+        tolerancjainp = input('podaj tolerancje katowa w stopniach: ')
+        tolerancja = cos((180+tolerancjainp)*pi/180)
         
         #Czytanie id
         bid = []
@@ -89,7 +91,7 @@ def simplify(layer):
                         ALFA = 0
 
                     #sprawdzenie czy sciana jest prosta
-                    if ALFA > -1+tolerancja:
+                    if ALFA > tolerancja:
                         bud180.append([punkty2[p0-1][0],punkty2[p0-1][1]])
                         sciany.append([punkty2[p0-1][0],punkty2[p0-1][1]])
 
