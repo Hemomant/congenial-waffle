@@ -1,0 +1,4 @@
+Linia kodu 32:
+idbudynku = arcpy.da.SearchCursor(layer, ['OBJECTID'])
+
+W zależności od wybranej warstwy trzeba zmienić nazwę kolumny z id na właściwą
